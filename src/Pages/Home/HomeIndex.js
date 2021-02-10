@@ -7,34 +7,40 @@ export default class HomeIndex extends Component{
     constructor(){
         super();
         this.state={
-            data:''
+            userData:[]
         }
     }
     componentDidMount(){
         axios.get(Url+'users').then(res=>{
-
+            this.setState({userData:res.data});
         }).catch(err=>{
             console.log(err);
             alert("Internal Server error")
         })
     }
+    _renderUserList(){
+        var data = this.state.userData;
+        var arr=[];
+        for(var i =0;i<data.length;i++){
+            arr.push( <a href="#" className="list-group-item list-group-item-action" key={"userKey-"+i}>{data[i].username}</a>)
+        }
+        return arr;
+    }
     render() {
+        console.log(this.state);
         return (
             <div>
-                <div>
-                    <Link to={'/server'}>Go to admin</Link>
-                </div>
-                <div className="justify-content-center flex-d row">
-                    <div className="col-md-10 card pd-10">
-                       <div>
-                           <label htmlFor="event" style={{marginRight:10}}>Choose a car: </label>
+                <div className="justify-content-center flex-d row mt-10">
+                    <div className="col-md-10 pd-10">
+                        <div>
+                            <Link to={'/server'}>Go to admin</Link>
+                        </div>
+                       <div className="mt-10">
+                           <h4>User Lists</h4>
 
-                           <select name="event" id="event" onChange={()=>console.log("test")}>
-                               <option value="volvo">Volvo</option>
-                               <option value="saab">Saab</option>
-                               <option value="mercedes">Mercedes</option>
-                               <option value="audi">Audi</option>
-                           </select>
+                           <ul className="list-group">
+                               {this._renderUserList()}
+                           </ul>
                        </div>
                     </div>
                 </div>
