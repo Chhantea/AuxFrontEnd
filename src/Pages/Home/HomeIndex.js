@@ -22,7 +22,7 @@ export default class HomeIndex extends Component{
         var data = this.state.userData;
         var arr=[];
         for(var i =0;i<data.length;i++){
-            arr.push( <a href="#" className="list-group-item list-group-item-action" key={"userKey-"+i}>{data[i].username}</a>)
+            arr.push( <Link to={{pathname:'/userDashboard', query:data[i]}} className="list-group-item list-group-item-action" key={"userKey-"+i}>{data[i].username}</Link>)
         }
         return arr;
     }
